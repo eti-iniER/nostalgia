@@ -1,0 +1,20 @@
+[project]
+name = "nostalgia"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.2.7",
+    "django-cors-headers>=4.9.0",
+    "django-filter>=25.1",
+    "django-leaflet>=0.32.0",
+    "djangorestframework>=3.16.1",
+    "djangorestframework-simplejwt>=5.5.1",
+    "drf-spectacular>=0.28.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.13.3",
+]
