@@ -6,7 +6,9 @@ export const Home = () => {
   return (
     <div className="flex w-full flex-1 flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-3">
-        <h1 className="font-beanie text-8xl text-neutral-600">Nostalgia</h1>
+        <h1 className="font-beanie animate-[gradient_5s_ease_infinite] bg-gradient-to-r from-rose-400 via-pink-500 to-rose-800 bg-[length:200%_200%] bg-clip-text p-2 text-8xl text-transparent">
+          Nostalgia
+        </h1>
         <p className="inline-flex items-center text-center text-neutral-400">
           Press
           <KbdGroup className="mx-2">

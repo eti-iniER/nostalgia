@@ -5,6 +5,7 @@ interface Frame {
 
 interface EditorState {
   frames: Array;
+  currentFrameIndex: number;
 }
 interface EditorContextValue {
   state: EditorState;
