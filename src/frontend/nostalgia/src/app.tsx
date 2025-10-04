@@ -1,15 +1,21 @@
 import "@/app.css";
+import { Editor } from "@/app/editor";
 import { Home } from "@/app/home";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { RootLayout } from "@/layouts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="*" element={<Navigate to="/home" replace />} />
-      <Route path="home" element={<Home />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<Home />} />
+        <Route path="e" element={<Editor />} />
+        <Route path="e/:id" element={<Editor />} />
+      </Route>
     </Routes>
   );
 };
