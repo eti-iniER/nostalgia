@@ -1,0 +1,24 @@
+import { Textarea } from "@/components/ui/textarea";
+import { useEditorContext } from "@/contexts/editor";
+import { cn } from "@/lib/utils";
+import { useForm } from "react-hook-form";
+
+export const Editor = () => {
+  const { currentFrame } = useEditorContext();
+  const form = useForm({
+    defaultValues: {
+      content: currentFrame?.content || "",
+    },
+  });
+
+  return (
+    <Textarea
+      className={cn(
+        "font-comic-relief flex w-full items-center justify-center border-0 !border-x border-dashed border-neutral-300 p-4 !text-xl text-neutral-600 shadow-none",
+        "focus:!ring-0 focus:!outline-none",
+        "resize-none rounded-none text-center whitespace-pre-wrap",
+      )}
+      {...form.register("content")}
+    ></Textarea>
+  );
+};

@@ -1,5 +1,5 @@
 import "@/app.css";
-import { Editor } from "@/app/editor";
+import { EditorPage } from "@/app/editor";
 import { Home } from "@/app/home";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,7 +15,7 @@ const AppRoutes = () => {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="e" element={<EditorLayout />}>
-          <Route path=":id" element={<Editor />} />
+          <Route path=":id" element={<EditorPage />} />
         </Route>
       </Route>
     </Routes>

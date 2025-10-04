@@ -2,7 +2,14 @@ import { useState } from "react";
 
 export const useEditor = () => {
   const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
-  const [frames, setFrames] = useState<Frame[]>([]);
+  const [frames, setFrames] = useState<Frame[]>([
+    {
+      id: "initial-frame",
+      type: "text",
+      prompt: "Hi there. Describe a core memory of yours.",
+      content: "",
+    },
+  ]);
 
   const addFrame = (frame: Frame) => {
     setFrames((prevFrames) => [...prevFrames, frame]);
@@ -26,6 +33,14 @@ export const useEditor = () => {
     }
   };
 
+  const updateFrame = (index: number, frame: Frame) => {
+    setFrames((prevFrames) => {
+      const newFrames = [...prevFrames];
+      newFrames[index] = frame;
+      return newFrames;
+    });
+  };
+
   return {
     frames,
     currentFrameIndex,
@@ -33,6 +48,8 @@ export const useEditor = () => {
     addAndGoToFrame,
     nextFrame,
     previousFrame,
+    updateFrame,
     totalFrameCount: frames.length,
+    currentFrame: frames[currentFrameIndex] || null,
   };
 };
