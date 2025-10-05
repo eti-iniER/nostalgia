@@ -1,6 +1,6 @@
 from api.serializers import FrameSerializer, MemorySerializer, SummarySerializer
 from core.models import Frame, Memory
-from core.services import create_new_frame, get_memory_summary
+from core.services.memory import create_new_frame, get_memory_summary
 from drf_spectacular.utils import extend_schema
 from rest_framework import status, viewsets
 from rest_framework.decorators import action

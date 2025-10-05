@@ -6,8 +6,8 @@ set -o pipefail
 
 set -o nounset
 
-uv run python manage.py collectstatic --noinput
-uv run python manage.py migrate
+uv run python nostalgia/manage.py collectstatic --noinput
+uv run python nostalgia/manage.py migrate
 
 NUM_WORKERS=${GUNICORN_WORKERS:-1}
 
