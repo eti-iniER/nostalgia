@@ -1,119 +1,198 @@
-# 🚀 ACTA Global Hackathon
+# 📸 Nostalgia
 
-**24 hours to build something impressive.**
+A modern web application for creating and sharing interactive memory collections. Built with Django REST Framework and React, Nostalgia allows users to create beautiful, shareable memories with multiple frames containing text and images.
 
-## ⏰ Timeline
+## ✨ Features
 
-- **Start**: Oct 4, 2025 at 12:00 CET
-- **End**: Oct 5, 2025 at 12:00 CET
-- **Duration**: 24 hours
+- 🎨 **Memory Editor**: Create and edit memories with multiple frames
+- 📝 **Rich Content**: Support for text and image frames
+- 🔗 **Shareable**: Generate unique URLs for your memories
+- 🔒 **Privacy Options**: Public or password-protected memories
+- 🖼️ **Image Management**: Upload and organize images within frames
+- 📱 **Responsive Design**: Modern, mobile-friendly interface built with Tailwind CSS
 
-## 🏆 Prizes
+## 🛠️ Tech Stack
 
-1. **1st**: One week in Cape Town (flights + hotel)
-2. **2nd**: €300 + fast-tracked interview
-3. **3rd**: Raspberry Pi + fast-tracked interview
+### Backend
 
-## 💡 What to Build
+- **Django 5.2** - Python web framework
+- **Django REST Framework** - RESTful API
+- **django-cors-headers** - CORS handling
+- **djangorestframework-simplejwt** - JWT authentication
+- **drf-spectacular** - API documentation
+- **Pillow** - Image processing
 
-**Option 1: Build anything you wish existed** (open format - truly anything!)
+### Frontend
 
-**Option 2: Choose one of these problem statements:**
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **React Router 7** - Navigation
+- **TanStack Query** - Data fetching
+- **Tailwind CSS 4** - Styling
+- **Radix UI** - UI components
+- **React Hook Form** - Form management
+- **Zod** - Schema validation
 
-### 1. Memory Keeper for Grandparents
-Interactive AI conversations that capture grandparents' life memories and turn them into blog posts for family members. Think Duolingo but for preserving family stories and wisdom.
+## 🚀 Getting Started
 
-### 2. Graph-Based Learning System
-Transform linear course content (like [MIT's Statistics course](https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2022/)) into an interactive graph-based learning experience. Organize concepts as nodes/connections to match how the brain actually learns - accelerating comprehension through visualization and non-linear exploration.
+### Prerequisites
 
-### 3. Agent Orchestration Layer
-Build the n8n for AI agents - an orchestration platform for vertical agents to create AI-native companies. Solve context engineering and enable swarm intelligence across agent networks.
+- **Python 3.13+**
+- **Node.js 18+** and npm
+- **uv** (Python package manager)
 
-**Note**: These are extensive problems - MVPs are perfectly fine and expected!
+### Backend Setup
 
-## 🎯 Rules
+1. Navigate to the backend directory:
 
-- Solo or duo teams
-- Greenfield projects only
-- Any tech stack
-- Must be buildable in 24 hours
-- Read [RULES.md](./RULES.md) for anti-cheating requirements
+    ```powershell
+    cd src/backend
+    ```
 
-## 🚀 Quick Start
+2. Create a virtual environment using `uv`:
 
-```bash
-# 1. Clone this repo
-git clone <your-fork-url>
-cd global-hackathon-v1
+    ```powershell
+    uv venv
+    ```
 
-# 2. Create timestamp (REQUIRED for anti-cheating)
-date > .hackathon-start
-git add .hackathon-start
-git commit -m "Starting hackathon - $(date)"
-git push
+3. Activate the virtual environment:
 
-# 3. Build your project here
-# 4. Commit regularly (minimum 5 commits)
+    ```powershell
+    .venv\Scripts\Activate.ps1
+    ```
+
+4. Install dependencies:
+
+    ```powershell
+    uv pip install -e .
+    ```
+
+5. Run database migrations:
+
+    ```powershell
+    cd nostalgia
+    python manage.py migrate
+    ```
+
+6. Start the Django development server:
+    ```powershell
+    python manage.py runserver
+    ```
+
+The backend API will be available at `http://localhost:8000`
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+
+    ```powershell
+    cd src/frontend/nostalgia
+    ```
+
+2. Install dependencies:
+
+    ```powershell
+    npm install
+    ```
+
+3. Start the development server:
+    ```powershell
+    npm run dev
+    ```
+
+The frontend will be available at `http://localhost:5173` (or another port if 5173 is in use)
+
+## 📁 Project Structure
+
+```
+nostalgia/
+├── src/
+│   ├── backend/
+│   │   ├── nostalgia/          # Django project
+│   │   │   ├── api/            # API endpoints
+│   │   │   ├── core/           # Core models (Memory, Frame, FrameImage)
+│   │   │   └── nostalgia/      # Project settings
+│   │   ├── pyproject.toml      # Python dependencies
+│   │   └── compose.yaml        # Docker Compose config
+│   └── frontend/
+│       └── nostalgia/
+│           ├── src/
+│           │   ├── api/        # API client and hooks
+│           │   ├── app/        # Page components
+│           │   ├── components/ # Reusable UI components
+│           │   ├── contexts/   # React contexts
+│           │   ├── hooks/      # Custom React hooks
+│           │   ├── layouts/    # Layout components
+│           │   └── lib/        # Utility functions
+│           └── package.json    # Node dependencies
 ```
 
-## 📤 Submission
+## 🗄️ Database Models
 
-**Deadline**: Oct 5, 2025 at 12:00 CET
+- **Memory**: Main container for a collection of frames
+    - Title, description, slug
+    - Public/private visibility
+    - Optional password protection
 
-**Submit at**: [https://forms.acta.so/r/wMobdM](https://forms.acta.so/r/wMobdM)
+- **Frame**: Individual content blocks within a memory
+    - Type (text or image)
+    - Prompt and content
+    - Ordering
 
-**You need**:
-1. Public GitHub repo URL
-2. 60-second demo video (Loom/YouTube - must be public)
-3. Live demo URL (deployed app)
-4. Your email and name
+- **FrameImage**: Images attached to frames
+    - Image file
+    - Caption and alt text
 
-## ✅ Before Submitting
+## 🔌 API Endpoints
 
-```bash
-# Run verification
-node verify-submission.js
+The backend provides RESTful API endpoints for:
+
+- Creating and managing memories
+- CRUD operations on frames
+- Image upload and management
+- Authentication and authorization
+
+API documentation is available via drf-spectacular when the server is running.
+
+## 🧪 Development
+
+### Backend
+
+Run the development server with hot reload:
+
+```powershell
+python manage.py runserver
 ```
 
-Check:
-- [ ] GitHub repo is public
-- [ ] 60s video is public and accessible
-- [ ] Live demo works in incognito window
-- [ ] Made 5+ commits during the 24 hours
-- [ ] README updated with project info
+### Frontend
 
-## 🎬 Judging
+Run with hot module replacement:
 
-**Top 25 submissions** will be ranked 1-10 on each criterion:
+```powershell
+npm run dev
+```
 
-### Craft (1-10)
-Quality of execution, code quality, attention to detail, polish. Does it work smoothly? Is it well-built? A simple feature done exceptionally well scores higher than complex features done poorly.
+Build for production:
 
-### Novelty (1-10)
-Originality and innovation. Is this a fresh take? Does it approach the problem differently? Bonus points for ideas that make judges think "why doesn't this exist yet?"
+```powershell
+npm run build
+```
 
-### Utility (1-10)
-Practical usefulness and real-world value. Would people actually use this? Does it solve a genuine problem? Could this become a real product?
+Preview production build:
 
-### Taste (1-10)
-Design sensibility, user experience, aesthetic choices. Is it intuitive? Does it feel good to use? Great taste shows in the details - from UI design to interaction patterns to copy writing.
+```powershell
+npm run preview
+```
 
-**Final scores** are calculated by summing all four dimensions. Highest total wins.
+## 📝 License
 
-## 💡 Tips
+MIT License - see [LICENSE](LICENSE) file for details
 
-- Start simple, iterate
-- Commit often (proves authenticity)
-- Deploy early (Vercel, Netlify, Railway)
-- Record demo showing actual functionality
-- Read [RULES.md](./RULES.md) to avoid disqualification
+## 🏆 Hackathon Project
 
-## 📞 Support
-
-- **Discord**: [Join](https://discord.gg/9KbH3f5M2a)
-- **Instagram**: [@acta.so](https://instagram.com/acta.so)
-- **Web**: [acta.so/hackathon](https://www.acta.so/hackathon)
+This project was built for the ACTA 24-hour Global Hackathon (Oct 4-5, 2025). See [RULES.md](RULES.md) for hackathon rules and requirements.
 
 ---
 
-**Good luck! 🎉**
+Built with ❤️ using Django and React
