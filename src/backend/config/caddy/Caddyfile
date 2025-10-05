@@ -1,10 +1,15 @@
 nostalgia.eti-ini.me {
-    # Handle API requests - strip /api prefix when proxying
+    # Handle API requests
     handle /api/* {
         reverse_proxy django:8000
     }
 
-    # Handle static files with fallback to index.html for SPA routing
+    # Handle Django admin static and media files
+    handle /static/* /media/* {
+        reverse_proxy django:8000
+    }
+
+    # Fallback for SPA routes
     handle {
         root * /usr/share/caddy
         try_files {path} /index.html
