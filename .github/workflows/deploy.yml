@@ -91,6 +91,6 @@ jobs:
                       sudo mkdir -p /var/www/nostalgia
                       sudo rm -rf /var/www/nostalgia/*
                       cd /tmp
-                      sudo tar -xzf frontend-build.tar.gz -C /var/www/nostalgia/
+                      sudo tar -xzf src/frontend-build.tar.gz -C /var/www/nostalgia/
                       sudo chown -R www-data:www-data /var/www/nostalgia
-                      rm -f frontend-build.tar.gz
+                      rm -rf src/frontend-build.tar.gz
