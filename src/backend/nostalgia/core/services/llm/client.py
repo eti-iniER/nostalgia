@@ -37,7 +37,7 @@ class LLMClient:
             handle_parsing_errors=True,
         )
 
-    async def ask(self, question: str) -> str:
+    def ask(self, question: str) -> str:
         """
         Sends a question to the agent and returns the final output.
 
@@ -47,7 +47,27 @@ class LLMClient:
         Returns:
             The agent's final answer as a string.
         """
-        result = await self.agent_executor.ainvoke({"input": question})
+        result = self.agent_executor.invoke({"input": question})
 
+        output = result["output"]
+        return output.strip().strip("```").strip()
+
+    def generate_frame_prompt(self, memory_summary: str) -> str:
+        """
+        Generates a new frame prompt based on the memory summary.
+
+        Args:
+            memory_summary: A summary of the conversation/memory so far.
+
+        Returns:
+            A warm, empathetic follow-up question or prompt.
+        """
+        prompt_text = f"""Based on this conversation summary, generate a thoughtful follow-up question or prompt:
+
+{memory_summary}
+
+Generate a single, warm follow-up question that will help the person explore their memories further."""
+
+        result = self.agent_executor.invoke({"input": prompt_text})
         output = result["output"]
         return output.strip().strip("```").strip()

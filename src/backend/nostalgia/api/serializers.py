@@ -14,7 +14,7 @@ class FrameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Frame
-        fields = ("uuid", "type", "prompt", "content", "order", "images")
+        fields = ("uuid", "type", "prompt", "content", "images")
         read_only_fields = ("uuid",)
 
     def create(self, validated_data):

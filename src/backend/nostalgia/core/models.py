@@ -31,10 +31,9 @@ class Frame(BaseModel):
     )
     prompt = models.TextField()
     content = models.TextField(blank=True, null=True)
-    order = models.PositiveIntegerField(null=True)
 
     class Meta:
-        ordering = ["order"]
+        ordering = ["id"]
 
 
 class FrameImage(BaseModel):
