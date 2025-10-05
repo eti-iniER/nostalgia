@@ -19,12 +19,13 @@ COPY --from=ghcr.io/astral-sh/uv:0.8.12 /uv /uvx /usr/local/bin/
 WORKDIR /app
 
 # Copy only dependency manifests first (maximize cache reuse)
+COPY entrypoint.sh /entrypoint.sh
 COPY pyproject.toml uv.lock ./
 
 RUN uv sync --locked --no-dev
 
 # Now copy the rest of the application source
 COPY . .
+RUN chmod +x /entrypoint.sh
 
-# Ensure entrypoint is executable (if not already in repo with +x)
-RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

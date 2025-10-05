@@ -149,3 +149,13 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": True,
     "SCHEMA_PATH_PREFIX": r"/api",
 }
+
+OPENROUTER_API_KEY = config("OPENROUTER_API_KEY", cast=str)
+OPENROUTER_API_URL = config(
+    "OPENROUTER_API_URL",
+    default="https://api.openrouter.ai/v1",
+    cast=str,
+)
+MODEL_NAME = config(
+    "MODEL_NAME", default="google/gemini-2.5-flash-preview-09-2025", cast=str
+)

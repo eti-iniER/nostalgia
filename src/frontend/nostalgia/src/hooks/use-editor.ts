@@ -39,18 +39,6 @@ export const useEditor = () => {
       prompt: "Hi there. What are you feeling nostalgic about today?",
       content: "",
     },
-    {
-      id: "initial-frame2",
-      type: "text",
-      prompt: "Can you share more details or a specific memory?",
-      content: "",
-    },
-    {
-      id: "initial-frame3",
-      type: "image",
-      prompt: "Do you have any photos related to this memory?",
-      images: [],
-    },
   ]);
 
   const addFrame = (frame: Frame) => {

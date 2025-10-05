@@ -1,7 +1,6 @@
 services:
     django:
         image: etinier/nostalgia:latest
-        entrypoint: ["/app/entrypoint.sh"]
         restart: unless-stopped
         volumes:
             - ./:/app

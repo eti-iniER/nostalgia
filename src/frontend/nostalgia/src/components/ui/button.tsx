@@ -19,6 +19,10 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        brand:
+          "relative overflow-hidden border-2 border-rose-500 bg-rose-500 text-white transition-all hover:bg-rose-600 hover:border-rose-600 active:bg-rose-700 after:absolute after:inset-[-2px] after:-z-10 after:animate-[gradient_5s_ease_infinite] after:bg-gradient-to-r after:from-rose-400 after:via-pink-500 after:to-rose-800 after:bg-[length:200%_200%] after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100",
+        "brand-outline":
+          "border-2 border-rose-500 bg-transparent text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

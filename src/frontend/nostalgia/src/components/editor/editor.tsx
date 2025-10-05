@@ -16,11 +16,13 @@ export const Editor = () => {
       placeholder={
         currentFrameIndex === 0 ? "I remember when..." : "Type here..."
       }
+      autoFocus
       className={cn(
         "font-comic-relief flex w-full items-center justify-center border-0 !border-x border-dashed border-neutral-300 p-4 !text-xl text-neutral-600 shadow-none",
         "focus:!ring-0 focus:!outline-none",
         "resize-none rounded-none text-center whitespace-pre-wrap",
         "placeholder:text-neutral-300",
+        "max-w-3xl",
       )}
       {...form.register("content")}
     ></Textarea>
