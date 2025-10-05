@@ -1,8 +1,7 @@
 services:
     django:
-        build:
-            context: .
-            dockerfile: Dockerfile
+        image: etinier/nostalgia:latest
+        entrypoint: ["/app/entrypoint.sh"]
         restart: unless-stopped
         volumes:
             - ./:/app
@@ -13,7 +12,6 @@ services:
             - .env
         depends_on:
             - postgres
-            - redis
 
     postgres:
         image: postgres:15
@@ -43,9 +41,9 @@ services:
             - /var/www/nostalgia:/usr/share/caddy
             - caddy_data:/data
             - caddy_config:/config
-        networks:
-            - app-network
 
 volumes:
     postgres_data: {}
     static_volume: {}
+    caddy_data: {}
+    caddy_config: {}
