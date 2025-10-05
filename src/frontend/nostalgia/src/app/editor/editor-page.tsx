@@ -8,16 +8,19 @@ import { useHotkeys } from "react-hotkeys-hook";
 export const EditorPage = () => {
   const editor = useEditorContext();
 
-  useHotkeys("left", editor.previousFrame);
-  useHotkeys("right", editor.nextFrame);
-  useHotkeys("ctrl+right, cmd+right", () =>
-    editor.addAndGoToFrame({
-      prompt: "Describe the next part of your memory.",
-      type: "text",
-      id: crypto.randomUUID(),
-      content: "",
-    }),
-  );
+  useHotkeys("alt+left", editor.previousFrame, { enableOnFormTags: true });
+  useHotkeys("alt+right", editor.nextFrame, { enableOnFormTags: true });
+  // useHotkeys(
+  //   "ctrl+right, cmd+right",
+  //   () =>
+  //     editor.addAndGoToFrame({
+  //       prompt: "Describe the next part of your memory.",
+  //       type: "text",
+  //       id: crypto.randomUUID(),
+  //       content: "",
+  //     }),
+  //   { enableOnFormTags: true },
+  // );
 
   return (
     <EditorPageLayout

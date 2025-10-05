@@ -11,4 +11,4 @@ uv run python nostalgia/manage.py migrate
 
 NUM_WORKERS=${GUNICORN_WORKERS:-1}
 
-exec uv run gunicorn eventvisionary.wsgi --bind 0.0.0.0:8000 --chdir=/app --workers $NUM_WORKERS
+exec uv run gunicorn nostalgia.nostalgia.wsgi --bind 0.0.0.0:8000 --workers $NUM_WORKERS
