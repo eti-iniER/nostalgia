@@ -3,8 +3,8 @@ services:
         image: etinier/nostalgia:latest
         restart: unless-stopped
         volumes:
-            - ./:/app
             - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
         ports:
             - "8000:8000"
         env_file:
@@ -44,5 +44,6 @@ services:
 volumes:
     postgres_data: {}
     static_volume: {}
+    media_volume: {}
     caddy_data: {}
     caddy_config: {}
