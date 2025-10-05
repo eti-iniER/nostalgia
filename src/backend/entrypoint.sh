@@ -6,7 +6,7 @@ set -o pipefail
 
 set -o nounset
 
-cd nostalgia
+cd ./nostalgia
 
 uv run python manage.py collectstatic --noinput
 uv run python manage.py migrate
