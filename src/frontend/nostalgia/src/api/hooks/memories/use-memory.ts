@@ -2,7 +2,7 @@ import { api } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 
 const getMemory = async (id: string): Promise<Memory> => {
-  const response = await api.get(`memories/${id}`);
+  const response = await api.get(`memories/${id}/`);
   return response.json();
 };
 
