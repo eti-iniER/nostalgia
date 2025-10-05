@@ -159,3 +159,7 @@ OPENROUTER_API_URL = config(
 MODEL_NAME = config(
     "MODEL_NAME", default="google/gemini-2.5-flash-preview-09-2025", cast=str
 )
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
