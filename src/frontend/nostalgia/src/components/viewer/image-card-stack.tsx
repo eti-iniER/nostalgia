@@ -6,7 +6,7 @@ const NOISE_FILTER_DATA_URI =
   "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E";
 
 interface ImageCardStackProps {
-  images: ImageCardData[];
+  images: FrameImage[];
   maxImages?: number;
   spreadDistance?: number; // Multiplier for card spread (1 = default, 2 = twice as spread out, etc.)
 }
@@ -49,7 +49,7 @@ export const ImageCardStack = ({
 
         return (
           <motion.div
-            key={`${image.src}-${index}`}
+            key={`${image.image}-${index}`}
             className="absolute"
             initial={{
               x: spreadX,
@@ -84,13 +84,12 @@ export const ImageCardStack = ({
                 "group max-w-[320px] rounded-sm bg-white p-4 shadow-lg transition-shadow duration-300",
                 "border border-neutral-200",
                 hovered && "shadow-2xl",
-                image.className,
               )}
             >
               <div className="relative aspect-square w-[280px] overflow-hidden rounded bg-gradient-to-br from-gray-50 to-gray-100">
                 <motion.img
-                  src={image.src}
-                  alt={image.alt || "Memory"}
+                  src={image.image}
+                  alt={image.altText || "Memory"}
                   className="size-full object-cover contrast-[1.08] saturate-[0.92] sepia-[0.12]"
                   animate={{
                     scale: hovered ? 1.05 : 1,

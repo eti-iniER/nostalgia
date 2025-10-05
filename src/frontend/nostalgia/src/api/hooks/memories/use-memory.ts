@@ -1,7 +1,7 @@
 import { api } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 
-const getMemory = async (id: string) => {
+const getMemory = async (id: string): Promise<Memory> => {
   const response = await api.get(`memories/${id}`);
   return response.json();
 };
@@ -11,7 +11,7 @@ interface UseMemoryParams {
 }
 
 export const useMemory = ({ id }: UseMemoryParams) => {
-  return useQuery({
+  return useQuery<Memory>({
     queryKey: ["memory", id],
     queryFn: () => getMemory(id),
     enabled: !!id,

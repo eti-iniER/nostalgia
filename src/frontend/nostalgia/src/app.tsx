@@ -17,10 +17,10 @@ const AppRoutes = () => {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="e" element={<EditorLayout />}>
-          <Route path=":id" element={<EditorPage />} />
+          <Route path=":memoryUuid" element={<EditorPage />} />
         </Route>
         <Route path="m" element={<ViewerLayout />}>
-          <Route path=":id" element={<Viewer />} />
+          <Route path=":memoryUuid" element={<Viewer />} />
         </Route>
       </Route>
     </Routes>
