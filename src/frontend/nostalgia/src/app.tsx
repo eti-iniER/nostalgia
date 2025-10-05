@@ -1,10 +1,12 @@
 import "@/app.css";
 import { EditorPage } from "@/app/editor";
 import { Home } from "@/app/home";
+import { Viewer } from "@/app/viewer";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { RootLayout } from "@/layouts";
 import { EditorLayout } from "@/layouts/editor";
+import { ViewerLayout } from "@/layouts/viewer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 
@@ -16,6 +18,9 @@ const AppRoutes = () => {
         <Route index element={<Home />} />
         <Route path="e" element={<EditorLayout />}>
           <Route path=":id" element={<EditorPage />} />
+        </Route>
+        <Route path="m" element={<ViewerLayout />}>
+          <Route path=":id" element={<Viewer />} />
         </Route>
       </Route>
     </Routes>

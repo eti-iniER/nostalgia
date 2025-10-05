@@ -6,7 +6,7 @@ export const useEditor = () => {
     {
       id: "initial-frame",
       type: "text",
-      prompt: "Hi there. Describe a core memory of yours.",
+      prompt: "Hi there. What are you feeling nostalgic about today?",
       content: "",
     },
   ]);
