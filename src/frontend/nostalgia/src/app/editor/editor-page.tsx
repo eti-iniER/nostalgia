@@ -1,7 +1,8 @@
-import { Editor, NavigationBar } from "@/components/editor";
+import { Editor, HotkeyLegend, NavigationBar } from "@/components/editor";
 import { GoToFrameDialog } from "@/components/editor/go-to-frame-dialog";
 import { useEditorContext } from "@/contexts/editor";
 import { useModal } from "@/hooks/use-modal";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export const EditorPage = () => {
   const editor = useEditorContext();
@@ -10,6 +11,17 @@ export const EditorPage = () => {
   const handleGoToFrame = (frame: number) => {
     console.log("Go to frame:", frame);
   };
+
+  useHotkeys("left", editor.previousFrame);
+  useHotkeys("right", editor.nextFrame);
+  useHotkeys("ctrl+right, cmd+right", () =>
+    editor.addAndGoToFrame({
+      prompt: "Describe the next part of your memory.",
+      type: "text",
+      id: crypto.randomUUID(),
+      content: "",
+    }),
+  );
 
   return (
     <div className="relative grid w-full flex-1 grid-cols-6 flex-col items-center justify-center">
@@ -32,6 +44,7 @@ export const EditorPage = () => {
           onDeleteFrame={() => {}}
           onAddTextFrame={() => {}}
         />
+        <HotkeyLegend className="absolute right-0 bottom-3 hidden md:flex" />
       </div>
     </div>
   );

@@ -10,12 +10,39 @@ class FrameImageSerializer(serializers.ModelSerializer):
 
 
 class FrameSerializer(serializers.ModelSerializer):
-    images = FrameImageSerializer(many=True, read_only=True)
+    images = FrameImageSerializer(many=True, read_only=False)
 
     class Meta:
         model = Frame
         fields = ("uuid", "type", "prompt", "content", "order", "images")
         read_only_fields = ("uuid",)
+
+    def create(self, validated_data):
+        images_data = validated_data.pop("images", [])
+        frame = Frame.objects.create(**validated_data)
+
+        # Create new FrameImage instances
+        for image_data in images_data:
+            FrameImage.objects.create(frame=frame, **image_data)
+
+        return frame
+
+    def update(self, instance, validated_data):
+        images_data = validated_data.pop("images", [])
+
+        # Update frame fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        # Delete all existing images
+        instance.images.all().delete()
+
+        # Create new FrameImage instances
+        for image_data in images_data:
+            FrameImage.objects.create(frame=instance, **image_data)
+
+        return instance
 
 
 class MemorySerializer(serializers.ModelSerializer):
@@ -39,3 +66,7 @@ class MemorySerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("uuid", "frames")
         write_only_fields = ("password", "user_id")
+
+
+class SummarySerializer(serializers.Serializer):
+    summary = serializers.CharField()

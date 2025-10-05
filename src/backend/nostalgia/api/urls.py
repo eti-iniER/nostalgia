@@ -9,6 +9,9 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r"memories", MemoryViewSet, basename="memory")
+router.register(
+    r"memories/(?P<memory_uuid>[^/.]+)/frames", FrameViewSet, basename="frame"
+)
 
 
 urlpatterns = [
@@ -26,11 +29,6 @@ urlpatterns = [
         "redoc/",
         SpectacularRedocView.as_view(url_name="api:schema"),
         name="redoc",
-    ),
-    path(
-        r"memories/<uuid:memory_uuid>/frames/",
-        FrameViewSet.as_view({"get": "list", "post": "create"}),
-        name="frame-list",
     ),
 ]
 
