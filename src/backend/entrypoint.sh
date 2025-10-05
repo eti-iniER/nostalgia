@@ -6,6 +6,8 @@ set -o pipefail
 
 set -o nounset
 
+exec ls
+
 cd /app/nostalgia
 
 uv run python manage.py collectstatic --noinput
