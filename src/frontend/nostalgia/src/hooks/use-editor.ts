@@ -34,7 +34,7 @@ export const useEditor = () => {
   const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
   const [frames, setFrames] = useState<Frame[]>([
     {
-      id: "initial-frame",
+      uuid: crypto.randomUUID(),
       type: "text",
       prompt: "Hi there. What are you feeling nostalgic about today?",
       content: "",

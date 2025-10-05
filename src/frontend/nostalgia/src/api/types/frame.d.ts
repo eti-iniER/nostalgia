@@ -1,7 +1,7 @@
 type FrameType = "text" | "image";
 
 interface Frame {
-  id: string;
+  uuid: string;
   prompt: string;
   type: FrameType;
   content?: string;
