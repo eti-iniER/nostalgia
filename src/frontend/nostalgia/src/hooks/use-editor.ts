@@ -1,5 +1,4 @@
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { useState } from "react";
 
 const formatFrameForAI = (frame: Frame, index: number): string => {
   let formatted = `--- Frame ${index + 1} ---\n`;
@@ -25,21 +24,38 @@ const formatFrameForAI = (frame: Frame, index: number): string => {
   return formatted;
 };
 
-export const useEditor = () => {
+const DEFAULT_FRAMES: Frame[] = [
+  {
+    uuid: crypto.randomUUID(),
+    type: "text",
+    prompt: "Hi there. What are you feeling nostalgic about today?",
+    content: "",
+  },
+];
+
+export const useEditor = (editorId?: string) => {
   const [userId, setUserId] = useLocalStorage("userId", crypto.randomUUID());
   const [activeMemoryId, setActiveMemoryId] = useLocalStorage<string | null>(
     "activeMemoryId",
     null,
   );
-  const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
-  const [frames, setFrames] = useState<Frame[]>([
-    {
-      uuid: crypto.randomUUID(),
-      type: "text",
-      prompt: "Hi there. What are you feeling nostalgic about today?",
-      content: "",
-    },
-  ]);
+
+  // Use localStorage for frames and currentFrameIndex with editorId-specific keys
+  const framesKey = editorId
+    ? `editor_${editorId}_frames`
+    : "editor_default_frames";
+  const frameIndexKey = editorId
+    ? `editor_${editorId}_frameIndex`
+    : "editor_default_frameIndex";
+
+  const [currentFrameIndex, setCurrentFrameIndex] = useLocalStorage(
+    frameIndexKey,
+    0,
+  );
+  const [frames, setFrames] = useLocalStorage<Frame[]>(
+    framesKey,
+    DEFAULT_FRAMES,
+  );
 
   const addFrame = (frame: Frame) => {
     setFrames((prevFrames) => [...prevFrames, frame]);

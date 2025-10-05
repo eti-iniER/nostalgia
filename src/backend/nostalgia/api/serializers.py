@@ -49,7 +49,7 @@ class MemorySerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         max_length=255, allow_blank=True, allow_null=True, write_only=True
     )
-    frames = serializers.SlugRelatedField(many=True, read_only=True, slug_field="uuid")
+    frames = FrameSerializer(many=True, read_only=True)
 
     class Meta:
         model = Memory

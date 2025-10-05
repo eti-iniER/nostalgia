@@ -1,9 +1,11 @@
 import { EditorProvider } from "@/contexts/editor";
-import { Outlet } from "react-router";
+import { Outlet, useParams } from "react-router";
 
 export const EditorLayout = () => {
+  const { editorId } = useParams<{ editorId: string }>();
+
   return (
-    <EditorProvider>
+    <EditorProvider editorId={editorId}>
       <div className="flex w-full flex-1 flex-col">
         <Outlet />
       </div>

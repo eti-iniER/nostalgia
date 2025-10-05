@@ -4,5 +4,5 @@ interface Memory {
   description: string;
   createdAt: string;
   isPublic: boolean;
-  frames: string[];
+  frames: Frame[];
 }

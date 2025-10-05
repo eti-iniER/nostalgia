@@ -1,57 +1,66 @@
-import { api } from "@/api";
 import { useMemory } from "@/api/hooks/memories/use-memory";
+import { images } from "@/constants";
 import { ViewerProvider } from "@/contexts/viewer";
-import { useQueries } from "@tanstack/react-query";
+import { TbX } from "react-icons/tb";
 import { Outlet, useParams } from "react-router";
 
 export const ViewerLayout = () => {
   const { memoryUuid } = useParams<{ memoryUuid: string }>();
 
-  // Fetch the memory
-  const { data: memory, isLoading: isLoadingMemory } = useMemory({
+  // Fetch the memory (frames are now included in the memory object)
+  const {
+    data: memory,
+    isPending,
+    isError,
+  } = useMemory({
     id: memoryUuid!,
   });
 
-  // Fetch all frames using useQueries
-  const frameQueries = useQueries({
-    queries:
-      memory?.frames?.map((frameUuid: string) => ({
-        queryKey: ["frame", memoryUuid, frameUuid],
-        queryFn: async () => {
-          const response = await api.get(
-            `memories/${memoryUuid}/frames/${frameUuid}/`,
-          );
-          return response.json();
-        },
-        enabled: !!memoryUuid && !!frameUuid,
-      })) ?? [],
-  });
-
-  const isLoadingFrames = frameQueries.some((query) => query.isLoading);
-  const frames = frameQueries
-    .map((query) => query.data)
-    .filter((frame): frame is Frame => frame !== undefined);
-
   // Show loading state
-  if (isLoadingMemory || isLoadingFrames) {
+  if (isPending) {
     return (
-      <div className="flex w-full flex-1 flex-col items-center justify-center">
-        <p>Loading...</p>
+      <div className="flex w-full flex-1 flex-col items-center justify-center gap-4">
+        <img
+          src={images.heartCircle}
+          alt="Loading..."
+          className="h-24 w-24 animate-pulse"
+        />
+        <p className="font-comic-relief text-muted-foreground text-lg">
+          Loading your memory
+        </p>
       </div>
     );
   }
 
   // Show error state
-  if (!memory) {
+  if (isError) {
     return (
-      <div className="flex w-full flex-1 flex-col items-center justify-center">
-        <p>Memory not found</p>
+      <div className="flex w-full flex-1 flex-col items-center justify-center gap-4">
+        <div className="relative">
+          <img
+            src={images.heartCircle}
+            alt="Error"
+            className="h-24 w-24 opacity-30 grayscale"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <TbX size={48} className="text-neutral-500" />
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <h2 className="font-comic-relief text-2xl text-neutral-800">
+            Memory not found
+          </h2>
+          <p className="text-muted-foreground font-comic-relief max-w-md">
+            We couldn't find this memory. It may have been deleted or the link
+            might be incorrect.
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <ViewerProvider memory={memory} frames={frames}>
+    <ViewerProvider memory={memory} frames={memory.frames}>
       <div className="flex w-full flex-1 flex-col">
         <Outlet />
       </div>
