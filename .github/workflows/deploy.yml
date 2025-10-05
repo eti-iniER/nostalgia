@@ -22,7 +22,7 @@ jobs:
 
             - name: Install frontend dependencies
               run: |
-                  cd frontend
+                  cd src/frontend
                   npm ci
 
             - name: Build frontend
