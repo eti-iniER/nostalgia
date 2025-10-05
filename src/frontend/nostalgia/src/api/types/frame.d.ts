@@ -4,19 +4,12 @@ interface Frame {
   id: string;
   prompt: string;
   type: FrameType;
+  content?: string;
+  images?: FrameImage[];
 }
 
-interface TextFrame extends Frame {
-  type: "text";
-  content: string;
-}
-
-interface ImageData {
-  alt: string;
-  url: string;
-}
-
-interface ImageFrame extends Frame {
-  type: "image";
-  images: ImageData[];
+interface FrameImage {
+  image: string;
+  caption: string;
+  altText?: string;
 }

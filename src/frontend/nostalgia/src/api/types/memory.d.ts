@@ -1,10 +1,8 @@
-interface MemoryMetadata {
-  id: string;
+interface Memory {
+  uuid: string;
   title: string;
+  description: string;
   createdAt: string;
-  image: string | null;
-}
-
-interface Memory extends MemoryMetadata {
-  frames: Frame[];
+  isPublic: boolean;
+  frames: string[];
 }

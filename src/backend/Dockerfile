@@ -21,7 +21,7 @@ WORKDIR /app
 # Copy only dependency manifests first (maximize cache reuse)
 COPY pyproject.toml uv.lock ./
 
-RUN uv sync --locked
+RUN uv sync --locked --no-dev
 
 # Now copy the rest of the application source
 COPY . .

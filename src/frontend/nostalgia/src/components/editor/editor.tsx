@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 
 export const Editor = () => {
-  const { currentFrame } = useEditorContext();
+  const { currentFrame, currentFrameIndex } = useEditorContext();
   const form = useForm({
     defaultValues: {
       content: currentFrame?.content || "",
@@ -13,7 +13,9 @@ export const Editor = () => {
 
   return (
     <Textarea
-      placeholder="Type here..."
+      placeholder={
+        currentFrameIndex === 0 ? "I remember when..." : "Type here..."
+      }
       className={cn(
         "font-comic-relief flex w-full items-center justify-center border-0 !border-x border-dashed border-neutral-300 p-4 !text-xl text-neutral-600 shadow-none",
         "focus:!ring-0 focus:!outline-none",

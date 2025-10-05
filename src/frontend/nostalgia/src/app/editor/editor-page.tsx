@@ -1,5 +1,4 @@
-import { Editor } from "@/components/editor";
-import { FrameCounter } from "@/components/editor/frame-counter";
+import { Editor, NavigationBar } from "@/components/editor";
 import { GoToFrameDialog } from "@/components/editor/go-to-frame-dialog";
 import { useEditorContext } from "@/contexts/editor";
 import { useModal } from "@/hooks/use-modal";
@@ -21,17 +20,18 @@ export const EditorPage = () => {
         limit={editor.totalFrameCount}
         onSelect={handleGoToFrame}
       />
-      <FrameCounter
-        currentFrameIndex={editor.currentFrameIndex}
-        totalFrameCount={editor.totalFrameCount}
-        onClick={goToFrameDialog.open}
-      />
 
       <div className="col-span-6 mx-4 flex flex-col items-center gap-4 md:col-span-4 md:col-start-2 md:mx-0">
         <h3 className="font-beanie max-w-md text-center text-3xl font-semibold text-rose-500">
           {editor.currentFrame.prompt}
         </h3>
         <Editor />
+        <NavigationBar
+          className="absolute bottom-3 mx-auto"
+          onAddImageFrame={() => {}}
+          onDeleteFrame={() => {}}
+          onAddTextFrame={() => {}}
+        />
       </div>
     </div>
   );

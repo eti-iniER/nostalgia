@@ -1,0 +1,5 @@
+.venv/
+config/
+.ruff_cache/
+README.md/
+*.env
