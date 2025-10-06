@@ -55,8 +55,6 @@ class MemorySerializer(serializers.ModelSerializer):
         model = Memory
         fields = (
             "uuid",
-            "user_id",
-            "slug",
             "title",
             "description",
             "is_public",
@@ -65,7 +63,7 @@ class MemorySerializer(serializers.ModelSerializer):
             "created_at",
         )
         read_only_fields = ("uuid", "frames")
-        write_only_fields = ("password", "user_id")
+        write_only_fields = "password"
 
 
 class SummarySerializer(serializers.Serializer):

@@ -2,7 +2,7 @@ import { api } from "@/api";
 import { useMutation } from "@tanstack/react-query";
 
 interface UpdateFramePayload {
-  type: FrameType;
+  type?: FrameType;
   content?: string;
   images?: File[];
 }
@@ -14,7 +14,9 @@ const updateFrame = async (
 ) => {
   const body = new FormData();
 
-  body.append("type", payload.type);
+  if (payload.type) {
+    body.append("type", payload.type);
+  }
 
   if (payload.content) {
     body.append("content", payload.content);

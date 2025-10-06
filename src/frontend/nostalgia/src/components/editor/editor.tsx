@@ -1,15 +1,33 @@
 import { Textarea } from "@/components/ui/textarea";
 import { useEditorContext } from "@/contexts/editor";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export const Editor = () => {
-  const { currentFrame, currentFrameIndex } = useEditorContext();
+  const { currentFrame, currentFrameIndex, updateFrame } = useEditorContext();
   const form = useForm({
     defaultValues: {
       content: currentFrame?.content || "",
     },
   });
+
+  // Watch for changes and update the editor context
+  const content = form.watch("content");
+
+  useEffect(() => {
+    if (currentFrame && content !== currentFrame.content) {
+      updateFrame(currentFrameIndex, {
+        ...currentFrame,
+        content,
+      });
+    }
+  }, [content, currentFrame, currentFrameIndex, updateFrame]);
+
+  // Reset form when frame changes
+  useEffect(() => {
+    form.reset({ content: currentFrame?.content || "" });
+  }, [currentFrame?.uuid, currentFrame?.content, form]);
 
   return (
     <Textarea

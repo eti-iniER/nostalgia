@@ -22,13 +22,6 @@ export function HotkeyLegend({ className }: HotkeyLegendProps) {
         </KbdGroup>
         <span className="text-muted-foreground text-sm">Previous</span>
       </div>
-      <div className="flex items-center gap-2">
-        <KbdGroup>
-          <Kbd>Ctrl</Kbd>
-          <Kbd>&rarr;</Kbd>
-        </KbdGroup>
-        <span className="text-muted-foreground text-sm">Add a new frame</span>
-      </div>
     </div>
   );
 }

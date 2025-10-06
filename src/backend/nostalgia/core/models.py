@@ -17,7 +17,6 @@ class BaseModel(models.Model):
 
 class Memory(BaseModel):
     user_id = models.UUIDField(blank=True, null=True)
-    slug = models.SlugField(unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     is_public = models.BooleanField(default=True)

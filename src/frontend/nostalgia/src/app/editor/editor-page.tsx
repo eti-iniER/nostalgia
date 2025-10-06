@@ -1,35 +1,51 @@
+import { useUpdateFrame } from "@/api/hooks/frames";
+import { useGetNextFrame } from "@/api/hooks/frames/use-get-next-frame";
 import { Editor, HotkeyLegend, NavigationBar } from "@/components/editor";
 import { Button } from "@/components/ui/button";
 import { MIN_FRAME_COUNT } from "@/constants/editor";
 import { useEditorContext } from "@/contexts/editor";
-import { EditorPageLayout } from "@/layouts";
 import { useHotkeys } from "react-hotkeys-hook";
+import { toast } from "sonner";
 
 export const EditorPage = () => {
   const editor = useEditorContext();
 
+  const updateFrame = useUpdateFrame({
+    memoryUuid: editor.activeMemoryId || "",
+    frameUuid: editor.currentFrame?.uuid || "",
+  });
+
+  const getNextFrame = useGetNextFrame(editor.activeMemoryId || "");
+
+  const handleContinue = async () => {
+    try {
+      // Get the current frame's content from the editor context
+      const currentContent = editor.currentFrame?.content || "";
+
+      // Update the current frame
+      await updateFrame.mutateAsync({
+        content: currentContent,
+      });
+
+      // Get the next frame from the API
+      const newFrame = await getNextFrame.mutateAsync();
+
+      // Add the new frame to the editor and navigate to it
+      editor.addAndGoToFrame(newFrame);
+
+      toast.success("Frame saved and new frame created!");
+    } catch (error) {
+      console.error("Error continuing:", error);
+      toast.error("Failed to continue. Please try again.");
+    }
+  };
+
   useHotkeys("alt+left", editor.previousFrame, { enableOnFormTags: true });
   useHotkeys("alt+right", editor.nextFrame, { enableOnFormTags: true });
-  // useHotkeys(
-  //   "ctrl+right, cmd+right",
-  //   () =>
-  //     editor.addAndGoToFrame({
-  //       prompt: "Describe the next part of your memory.",
-  //       type: "text",
-  //       id: crypto.randomUUID(),
-  //       content: "",
-  //     }),
-  //   { enableOnFormTags: true },
-  // );
 
   return (
-    <EditorPageLayout
-      frameKey={editor.currentFrameIndex}
-      className="relative grid w-full flex-1 grid-cols-6 flex-col items-center justify-center pb-24 md:pb-8"
-      blurAmount={10}
-      transitionDuration={0.35}
-    >
-      <div className="col-span-6 mx-4 flex flex-col items-center gap-4 md:col-span-4 md:col-start-2 md:mx-0">
+    <div className="mg:max-w-3xl flex h-full w-full flex-1 flex-col items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
         <h3 className="font-beanie max-w-md text-center text-2xl font-semibold text-rose-500 md:text-3xl">
           {editor.currentFrame.prompt}
         </h3>
@@ -39,8 +55,12 @@ export const EditorPage = () => {
             <Button
               variant="brand"
               className="font-comic-relief w-full rounded-full px-8 py-6 !text-lg md:w-auto"
+              onClick={handleContinue}
+              disabled={updateFrame.isPending || getNextFrame.isPending}
             >
-              Continue
+              {updateFrame.isPending || getNextFrame.isPending
+                ? "Saving..."
+                : "Continue"}
             </Button>
           )}
           {editor.currentFrameIndex >= MIN_FRAME_COUNT - 1 && (
@@ -52,14 +72,14 @@ export const EditorPage = () => {
             </Button>
           )}
         </div>
-        <NavigationBar
-          className="md:absolute md:bottom-3 md:mx-auto"
-          onAddImageFrame={() => {}}
-          onDeleteFrame={() => {}}
-          onAddTextFrame={() => {}}
-        />
-        <HotkeyLegend className="absolute right-0 bottom-3 hidden md:flex" />
       </div>
-    </EditorPageLayout>
+      <NavigationBar
+        className="md:absolute md:bottom-3 md:mx-auto"
+        onAddImageFrame={() => {}}
+        onDeleteFrame={() => {}}
+        onAddTextFrame={() => {}}
+      />
+      <HotkeyLegend className="absolute right-0 bottom-3 hidden md:flex" />
+    </div>
   );
 };

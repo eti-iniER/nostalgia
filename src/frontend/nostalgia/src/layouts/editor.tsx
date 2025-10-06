@@ -6,7 +6,7 @@ export const EditorLayout = () => {
 
   return (
     <EditorProvider editorId={editorId}>
-      <div className="flex w-full flex-1 flex-col">
+      <div className="flex h-full w-full flex-1 flex-col">
         <Outlet />
       </div>
     </EditorProvider>

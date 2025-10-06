@@ -8,6 +8,7 @@ import { RootLayout } from "@/layouts";
 import { EditorLayout } from "@/layouts/editor";
 import { ViewerLayout } from "@/layouts/viewer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "next-themes";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 
 const AppRoutes = () => {
@@ -32,12 +33,14 @@ export const App = () => {
 
   return (
     <QueryClientProvider client={client}>
-      <TooltipProvider>
-        <Toaster position="top-right" theme="dark" />
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
+      <ThemeProvider forcedTheme="light" defaultTheme="light" attribute="class">
+        <TooltipProvider>
+          <Toaster position="top-right" theme="dark" richColors />
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
